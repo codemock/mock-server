@@ -3,7 +3,7 @@ import os
 import json
 
 app = Flask(__name__)
-filename = os.environ.get('mock-file-data')
+filename = os.environ.get('mock-file-data','output.json')
 with open(filename, 'r') as f:
     url_output_map = json.load(f)
 
@@ -13,7 +13,7 @@ def base_response_to_request():
     for output in output_list:
         if all(output['query_string'].get(arg)== request.args.get(arg) for arg in request.args):
             return output.get('response')
-    return 'HI"'
+    return 'failed'
 
 
 def bootstrap(app):
